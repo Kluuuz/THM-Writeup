@@ -6,7 +6,7 @@
 ## 1. Reconnaissance 
 After getting the IP {10.48.136.43} the first thing every ethical hacker should do is the reconnaissance phase. I start by running an Nmap scan on the target IP and found two ports open. Port 22 ssh and port 80 HTTP.
 
-![alt text](pictures/image.png)
+![alt text](pictures/foolsme_nmap.png)
 
 Okay so now since we know that the IP is hosting a website lets open it in the browser.
 
