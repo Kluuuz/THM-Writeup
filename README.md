@@ -6,7 +6,7 @@ This repository contains my personal write-ups for TryHackMe rooms that I've com
 
 Each room has its own folder containing:
 
-* `README.md` – The walkthrough
+* `ctf.md` – The walkthrough
 * `pictures/` – Screenshots used in the write-up
 
 ## Disclaimer
