@@ -1,6 +1,7 @@
 # The Sticker Shop
 
 **Difficulty:** Easy
+
 **Category:** Red Team
 
 ## 1. Reconnaissance
