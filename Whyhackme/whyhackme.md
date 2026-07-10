@@ -164,12 +164,32 @@ I went back to the machine and check what ports are currently open.
 ss -tlnp
 ```
 
-and surprisingly port 41312 is still open suggesting that a service is currently running
+and surprisingly port 41312 is still running suggesting that a service is currently running
 
 ![alt text](photos/ss.png)
 
-I ran an nmap scan on the malicious port to see what service is currently running.
+Since it was mentioned from urgent.txt that the they temporarily blocked the port using iptables. I first deleted the rule that prevents the port from running using iptables commands.
+
+I then proceed to delete the rule that blocks the malicious port and add a new rule that opens it.
+```bash
+sudo iptables -L --line-numbers
+```
+
+```bash
+sudo iptables -D INPUT 1
+```
+
+```bash
+sudo iptables -A INPUT -p tcp --dport 41312 -j ACCEPT
+```
+
+![alt text](photos/iptable.png)
+
+Once thats done. I ran an nmap scan on the malicious port to see what service is currently running.
 
 ```bash
 nmap -sV -p 41312 (target-ip)
 ```
+We discovered that an apache service is running in that port
+
+![alt text](photos/apache.png)
