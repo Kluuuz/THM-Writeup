@@ -140,4 +140,36 @@ After checking, we can run iptables as root. I've looked up in gtfobins if we ca
 
 ![alt text](photos/suid.png)
 
-While exploring the server I discovered 2 interesting files in opt. urgent.txt and a pcap file
+While exploring the server I discovered 2 interesting files in opt. urgent.txt and a pcap file. Inside the urgent.txt it is mentioned that there has been a previous infiltration that occured. Suggesting that inside cgi-bin there might be a backdoor/rootkit stored in that directory.
+
+![alt text](photos/urgent.png)
+
+I tried accessing the cgi-bin and no luck, I also checked the permissions of the cgi-bin and it states that the directory is owned by the user "h4cked". Probably the reason why the admin could not delete it.
+
+![alt text](photos/cgi.png)
+
+Let's download the file using scp and open it with wireshark.
+
+```bash
+scp  jack@10.48.184.243:/opt/capture.pcap /home/myname/Documents/ctf/Whyhackme
+```
+
+When inspecting the pcap file, Everything is incomprehensible since the traffic is encrypted. The only clue we have is that the attacker is attacking the server via port 41312.
+
+![alt text](photos/port.png)
+
+I went back to the machine and check what ports are currently open.
+
+```bash
+ss -tlnp
+```
+
+and surprisingly port 41312 is still open suggesting that a service is currently running
+
+![alt text](photos/ss.png)
+
+I ran an nmap scan on the malicious port to see what service is currently running.
+
+```bash
+nmap -sV -p 41312 (target-ip)
+```
