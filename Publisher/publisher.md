@@ -122,3 +122,13 @@ It then spawned us a shell that bypasses the AppArmour restrictions. We now have
 Now that we can edit the I added a script inside the /opt/run_container.sh that lets me read whats inside the root directory
 
 ![alt text](pics/bash.png)
+
+I'd then run the container that executes the bash script. 
+
+```bash
+/usr/sbin/run_container
+```
+
+Now we were able to read the contents of the root directory. Let us edit the script again so we could retrieve the root flag.
+
+![alt text](pics/dir.png)
